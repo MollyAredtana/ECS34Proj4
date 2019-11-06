@@ -1,3 +1,12 @@
+# Project Specific
+libcsv-3.0.3/Makefile
+libcsv-3.0.3/.lib/*
+libcsv-3.0.3/.deps/
+libcsv-3.0.3/config.log
+libcsv-3.0.3/autom4te.cache/
+libcsv-3.0.3/config.status
+libcsv-3.0.3/libtool
+
 # Prerequisites
 *.d
 
