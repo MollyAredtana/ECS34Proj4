@@ -4,6 +4,9 @@
 #include <ostream>
 #include <string>
 #include <vector>
+#include <iostream>
+#include "csv.h"
+#include <sstream>
 
 class CCSVWriter{
     protected:

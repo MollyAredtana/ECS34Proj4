@@ -1,21 +1,29 @@
-#ifndef CSVREADER_H 	  			 	 
-#define CSVREADER_H
+#include "CSVReader.h"
+#include <iostream>
 
-#include <istream>
-#include <string>
-#include <vector>
-#include <csv.h>
+CCSVReader::CCSVReader(std::istream &in)
+{
 
-class CCSVReader{
-    protected:
-        
-        
-    public:
-        CCSVReader(std::istream &in);
-        ~CCSVReader();
-        
-        bool End() const;
-        bool ReadRow(std::vector< std::string > &row);
-};
+}
+CCSVReader::~CCSVReader()
+{
 
-#endif
+}
+        
+bool CCSVReader::End() const
+{
+
+
+
+}
+bool CCSVReader::ReadRow(std::vector< std::string > &row)
+{
+    if(!End())
+    {
+        for(auto i : row)
+        {
+            std::cout << i << std::endl;
+        }
+    }
+
+}

@@ -16,7 +16,7 @@ CSVOBJS = $(OBJ_DIR)/CSVReader.o
 
 CSVTEST = testcsv
 
-all : $(LIBCSV_DIR)/.libs/$(LIBCSV_LIB) RUNTESTS
+all : directories $(LIBCSV_DIR)/.libs/$(LIBCSV_LIB) RUNTESTS
 
 RUNTESTS: RUNCSVTEST
 	RUNCSVTEST
