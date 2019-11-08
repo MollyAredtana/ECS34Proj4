@@ -10,6 +10,7 @@
 
 class CCSVReader{
     protected:
+        std::istream &input;
     
         
         
@@ -19,6 +20,7 @@ class CCSVReader{
         
         bool End() const;
         bool ReadRow(std::vector< std::string > &row);
+        //std::istream &input;
 };
 
 #endif

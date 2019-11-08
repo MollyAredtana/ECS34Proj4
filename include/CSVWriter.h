@@ -10,6 +10,7 @@
 
 class CCSVWriter{
     protected:
+        std::ostream &output;
 
     public:
         CCSVWriter(std::ostream &ou);

@@ -7,6 +7,7 @@
 
 class CXMLReader{
     private:
+        std::istream &isinput;
         
     public:
         CXMLReader(std::istream &is);

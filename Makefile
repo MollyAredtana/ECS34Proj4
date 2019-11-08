@@ -1,6 +1,9 @@
 CXX=g++
 
+
 LIBCSV_DIR = libcsv-3.0.3
+# not sure should I do that or not
+# LIBCSV_DIR = libcsv-3.0.3 -lexpat
 LIBCSV_LIB = libcsv.a
 
 INCLUDE_DIR = ./include
@@ -12,7 +15,7 @@ TESTBIN_DIR = ./tesbin
 CXXFLAGS = --std=c++14 -I $(INCLUDE_DIR) -I $(LIBCSV_DIR)
 TESTLDFLAGS = -lgtest -lgtest_main -lpthread
 # some problem here need check
-CSVOBJS = $(OBJ_DIR)/CSVReader.o
+CSVOBJS = $(OBJ_DIR)/CSVReader.o $(OBJ_DIR)/CSVWriter.o
 
 CSVTEST = testcsv
 
@@ -36,6 +39,9 @@ $(OBJ_DIR)/testcsv.o: $(SRC_DIR)/testcsv.cpp $(INCLUDE_DIR)/CSVReader.h
 
 $(OBJ_DIR)/CSVReader.o: $(SRC_DIR)/CSVReader.cpp $(INCLUDE_DIR)/CSVReader.h
 	$(CXX) $(CXXFLAGS) $(SRC_DIR)/CSVReader.cpp -c -o $(OBJ_DIR)/CSVReader.o
+
+$(OBJ_DIR)/CSVWriter.o: $(SRC_DIR)/CSVWriter.cpp $(INCLUDE_DIR)/CSVWriter.h
+	$(CXX) $(CXXFLAGS) $(SRC_DIR)/CSVWriter.cpp -c -o $(OBJ_DIR)/CSVWriter.o
 
 $(TESTBIN_DIR)/$(CSVTEST): $(OBJ_DIR)/testcsv.o $(CSVOBJS) $(LIBCSV_DIR)/.libs/$(LIBCSV_LIB)
 	$(CXX) $(CXXFLAGS) $(OBJ_DIR)/testcsv.o $(CSVOBJS) $(LIBCSV_DIR)/.libs/$(LIBCSV_LIB) -o $(TESTBIN_DIR)/$(CSVTEST) $(TESTLDFLAGS)

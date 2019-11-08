@@ -7,6 +7,7 @@
 
 class CXMLWriter{
     private:
+        std::ostream &osoutput;
         
     public:
         CXMLWriter(std::ostream &os);
