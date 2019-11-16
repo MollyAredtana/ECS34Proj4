@@ -5,8 +5,9 @@
 #include <string>
 #include <vector>
 #include <iostream>
-#include "csv.h"
+#include <csv.h>
 #include <sstream>
+#include "StringUtils.h"
 
 class CCSVWriter{
     protected:
@@ -17,6 +18,10 @@ class CCSVWriter{
         ~CCSVWriter();
 
         bool WriteRow(const std::vector< std::string > &row);
+
+        long unsigned fields;
+        long unsigned rows;
+        csv_parser Data;
 };
 
 #endif
