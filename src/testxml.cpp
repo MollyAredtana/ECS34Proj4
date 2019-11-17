@@ -137,6 +137,7 @@ TEST(XMLReader, SuperComplexTest)
     EXPECT_TRUE(Reader.ReadEntity(Entity));
     EXPECT_EQ(Entity.DType, SXMLEntity::EType::StartElement);
     EXPECT_EQ(Entity.DNameData, "other");
+    EXPECT_FALSE(Reader.End());
     EXPECT_TRUE(Reader.ReadEntity(Entity));
     EXPECT_EQ(Entity.DType, SXMLEntity::EType::CharData);
     EXPECT_EQ(Entity.DNameData, "hhh");
@@ -165,6 +166,28 @@ TEST(XMLReader, skip1)
     EXPECT_FALSE(Reader.ReadEntity(Entity, true));
     EXPECT_FALSE(Reader.ReadEntity(Entity, true));
     EXPECT_TRUE(Reader.End());
+
+}
+
+TEST(XMLReader, skip2)
+{
+    // " 1,2 ,  3         ,4,5\x0d\x0a";
+
+    std::stringstream input("<ppp><other><jjj></jjj></other></ppp>");
+    // std::cout << "\"I call our world Flatland\",\x0a" << std::endl;
+
+    CXMLReader Reader(input);
+
+    SXMLEntity Entity;
+
+    EXPECT_FALSE(Reader.ReadEntity(Entity, true));
+    EXPECT_TRUE(Reader.ReadEntity(Entity));
+    EXPECT_EQ(Entity.DType, SXMLEntity::EType::StartElement);
+    EXPECT_EQ(Entity.DNameData, "ppp");
+    EXPECT_TRUE(Reader.ReadEntity(Entity));
+    EXPECT_EQ(Entity.DType, SXMLEntity::EType::StartElement);
+    EXPECT_EQ(Entity.DNameData, "other");
+    EXPECT_FALSE(Reader.End());
 
 }
 

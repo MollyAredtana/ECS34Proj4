@@ -72,10 +72,12 @@ bool CCSVReader::End() const  // not sure about this one
 }
 bool CCSVReader::ReadRow(std::vector< std::string > &row) 
 {
+    std::cout << __LINE__ << " @ line " << std::endl;
 
     std::string Row;
     while(!input.eof() &&  Buffer2.empty())
     {
+        std::cout << " @ " << __LINE__ << std::endl;
         input.read(TempData, sizeof(TempData));
         ByteReads = input.gcount();
         csv_parse(& Data, TempData, ByteReads, cbb1, cbb2, this);
@@ -89,6 +91,7 @@ bool CCSVReader::ReadRow(std::vector< std::string > &row)
     if(!Buffer2.empty())
     {
         std::cout << "  buffer size is  " << Buffer2.size() << std::endl;
+        row.clear();
         row = Buffer2.front();
         Buffer2.pop_front();
 
@@ -103,6 +106,7 @@ bool CCSVReader::ReadRow(std::vector< std::string > &row)
         return true;
     }
     else{
+        std::cout << "  empty  " << std::endl;
         return false;
     }
 

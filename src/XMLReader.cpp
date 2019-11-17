@@ -78,15 +78,22 @@ bool CXMLReader::ReadEntity(SXMLEntity &entity, bool skipcdata)
         return false;
     }
     
-    while(!input.eof() && Buffer.empty() && skipcdata != true)
+    while(!input.eof() && Buffer.empty())
     {
         SXMLEntity cg;
-    
-        input.read(TempData, sizeof(TempData));
-        XML_Parse(Parser, TempData, input.gcount(), XML_TRUE);
-        if(skipcdata == true && Buffer.front().DType == SXMLEntity::EType::CharData)
+
+        if(!skipcdata)
         {
-            Buffer.pop_front();
+    
+            input.read(TempData, sizeof(TempData));
+            XML_Parse(Parser, TempData, input.gcount(), XML_TRUE);
+            if(skipcdata == true && Buffer.front().DType == SXMLEntity::EType::CharData)
+            {
+                Buffer.pop_front();
+            }
+        }
+        else{
+            return false;
         }
     }
 

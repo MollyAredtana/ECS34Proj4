@@ -19,10 +19,8 @@ TEST(CSVReader, Emptyfile)
 
 TEST(CSVReader, SingleRow1)
 {
-    // " 1,2 ,  3         ,4,5\x0d\x0a";
 
     std::stringstream input("\"I call our world Flatland\",\x0a");
-    // std::cout << "\"I call our world Flatland\",\x0a" << std::endl;
     CCSVReader Reader(input);
     std::vector<std::string> Row;
 
@@ -32,25 +30,16 @@ TEST(CSVReader, SingleRow1)
     {
         EXPECT_EQ(Row[0], "I call our world Flatland");
         EXPECT_EQ(Row[1], ",");
-        // EXPECT_EQ(Row[1], "2");
-        // EXPECT_EQ(Row[2], "3");
-        // EXPECT_EQ(Row[3], "4");
-        // EXPECT_EQ(Row[4], "5");
-        // EXPECT_EQ(Row[6], "9");// should it be 99 or 
-        // EXPECT_EQ(Row[7], "a");
     }
     EXPECT_TRUE(Reader.End());
 
 }
 
 
-// ",,,,,\x0a"
 TEST(CSVReader, SingleRow2)
 {
-    // " 1,2 ,  3         ,4,5\x0d\x0a";
 
     std::stringstream input(",,,,,\x0a");
-    // std::cout << "\"I call our world Flatland\",\x0a" << std::endl;
     CCSVReader Reader(input);
     std::vector<std::string> Row;
 
@@ -69,12 +58,6 @@ TEST(CSVReader, SingleRow2)
 
 TEST(CSVReader, MultipleRows)
 {
-    std::cout << "\"I call our world Flatland,\x0a"
-                       "not because we call it so,\x0a"
-                       "but to make its nature clearer\x0a"
-                       "to you, my happy readers,\x0a"
-                       "who are privileged to live in Space.\"" << std::endl;
-    
 
     std::stringstream input("\"I call our world Flatland,\x0a"
                        "not because we call it so,\x0a"
@@ -106,6 +89,28 @@ TEST(CSVReader, longnumbers)
     if(0 <= Row.size())
     {
         EXPECT_EQ(Row[0], "12345678901234567890123456789012");
+       
+    }
+
+    EXPECT_TRUE(Reader.End());
+
+}
+
+TEST(CSVReader, weirdnumbers)
+{
+    
+    // std::cout << " a\0b\0c " << std::endl;
+
+    std::stringstream input(" a\0b\0c ");
+    CCSVReader Reader(input);
+    std::vector<std::string> Row;
+
+    EXPECT_TRUE(Reader.ReadRow(Row));
+    EXPECT_EQ(Row.size(), 1);
+
+    if(0 <= Row.size())
+    {
+        EXPECT_EQ(Row[0], "a");
        
     }
 
