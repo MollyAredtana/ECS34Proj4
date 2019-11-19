@@ -192,21 +192,91 @@ TEST(XMLReader, skip2)
 }
 
 
-TEST(XMLWriter, Emptyfile)
-{
-    
-}
-
-
-TEST(XMLWriter, SimpleTest)
+TEST(XMLWriter, Single)
 {
     std::stringstream output;
-    
+    CXMLWriter Writer(output);
+    SXMLEntity Test;
+    Test.DType = SXMLEntity::EType::CompleteElement;
+    Test.DNameData = "Hello Greetings = \"Hi\"";
+	EXPECT_TRUE(Writer.WriteEntity(Test));
+	EXPECT_EQ(output.str(), "<Hello Greetings = \"Hi\"/>");
 }
 
-
-TEST(XMLWriter, ComplexTest)
+TEST(XMLWriter, StartandEnd)
 {
     std::stringstream output;
+    CXMLWriter Writer(output);
+    SXMLEntity Test1, Test2;
+    Test1.DType = SXMLEntity::EType::StartElement;
+    Test1.DNameData = "Hello";
+    Test2.DType = SXMLEntity::EType::EndElement;
+    Test2.DNameData = "Hello";
+	EXPECT_TRUE(Writer.WriteEntity(Test1));
+	EXPECT_TRUE(Writer.WriteEntity(Test2));
+	EXPECT_EQ(output.str(), "<Hello></Hello>");
+}
+
+TEST(XMLWriter, Flush)
+{
+    std::stringstream output;
+    CXMLWriter Writer(output);
+    SXMLEntity Test1, Test2;
+    Test1.DType = SXMLEntity::EType::StartElement;
+    Test1.DNameData = "Hello";
+    Test2.DType = SXMLEntity::EType::EndElement;
+    Test2.DNameData = "Hello";
+    Test2.DType = SXMLEntity::EType::EndElement;
+	EXPECT_TRUE(Writer.WriteEntity(Test1));
+	EXPECT_TRUE(Writer.Flush());
+	EXPECT_EQ(output.str(), "<Hello></Hello>");
+}
+
+TEST(XMLWriter, LargerFile)
+{
+    std::stringstream output;
+    CXMLWriter Writer(output);
+    SXMLEntity Test1, Test2, Test3, Test4, Test5, Test6, Test7;
+    Test1.DType = SXMLEntity::EType::StartElement;
+    Test1.DNameData = "Hello";
+    Test2.DType = SXMLEntity::EType::CharData;
+    Test2.DNameData = "\n ";
+    Test3.DType = SXMLEntity::EType::CompleteElement;
+    Test3.DNameData = "Greeting Hi = \"Good Morning\"";
+    Test4.DType = SXMLEntity::EType::CharData;
+    Test4.DNameData = "\n ";
+    Test5.DType = SXMLEntity::EType::CompleteElement;
+    Test5.DNameData = "Greeting Hey = \"Good Afternoon\"";
+    Test6.DType = SXMLEntity::EType::CharData;
+    Test6.DNameData = "\n";
+    Test7.DType = SXMLEntity::EType::EndElement;
+    Test7.DNameData = "Hello";
     
+	EXPECT_TRUE(Writer.WriteEntity(Test1));
+	EXPECT_TRUE(Writer.WriteEntity(Test2));
+	EXPECT_TRUE(Writer.WriteEntity(Test3));
+	EXPECT_TRUE(Writer.WriteEntity(Test4));
+	EXPECT_TRUE(Writer.WriteEntity(Test5));
+	EXPECT_TRUE(Writer.WriteEntity(Test6));
+	EXPECT_TRUE(Writer.WriteEntity(Test7));
+	EXPECT_EQ(output.str(), "<Hello>\n <Greeting Hi = \"Good Morning\"/>\n <Greeting Hey = \"Good Afternoon\"/>\n</Hello>");
+}
+
+TEST(XMLWriter, NestedFlush){
+	
+    std::stringstream output;
+    CXMLWriter Writer(output);
+    SXMLEntity Test1, Test2, Test3, Test4, Test5, Test6, Test7;
+    Test1.DType = SXMLEntity::EType::StartElement;
+    Test1.DNameData = "Hello";
+    Test2.DType = SXMLEntity::EType::StartElement;
+    Test2.DNameData = "Hey";
+    Test3.DType = SXMLEntity::EType::StartElement;
+    Test3.DNameData = "Greetings";
+	
+	EXPECT_TRUE(Writer.WriteEntity(Test1));
+	EXPECT_TRUE(Writer.WriteEntity(Test2));
+	EXPECT_TRUE(Writer.WriteEntity(Test3));
+	EXPECT_TRUE(Writer.Flush());
+	EXPECT_EQ(output.str(), "<Hello><Hey><Greetings></Greetings></Hey></Hello>");
 }

@@ -25,7 +25,7 @@ class CXMLReader{
         std::list <SXMLEntity> Buffer;
 
         std::list <std::vector <std::string > > Buffer2;
-        char TempData[8000];
+        char TempData[20000];
 
         static void START(void *UserData, const XML_Char * Name, const XML_Char ** attris);
         // it used to be a void ptr here ex :: void *UserData

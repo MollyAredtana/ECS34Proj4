@@ -6,6 +6,8 @@
 #include "CSVWriter.h"
 #include <fstream>
 #include <string>
+#include "StringUtils.h"
+#include "Path.h"
 
 
 // logic
@@ -39,12 +41,14 @@ std::stringstream st;
 std::vector <std::string> Country;
 std::vector <std::string> Year;
 
-int main()
+int main(int argc, char * argv[])
 {
+    
+    
     std::cout << "  this is the main .cpp" << std::endl;
     // 1
     // CXMLReader Reader;
-    std::string file = "smallmanifest.xml"; // I have to output a file and put it here in the end 
+    std::string file = argv[1]; // I have to output a file and put it here in the end 
                             // but I have to do some functions to figure out the names 
                             // and ages and etc
     std::ifstream s(file);
@@ -54,17 +58,6 @@ int main()
         std::cout << "  Can not be opened  " << std::endl; 
     }
     CXMLReader Reader(s);
-    // Reader.ReadEntity(Entity);
-
-    // name = Entity.DNameData;
-
-    // std::cout << "  the name is " << name  << std::endl;
-    // the names for each attribute is different, so we have to use the DAttributes 
-    // which is a vector and go through everything inside of it
-    // like   Entity.DAttributes.front().first   to find the key name
-    // country="ENG"
-    //  key     value
-    //    Attribute
 
     std::pair< std::string, std::string > first;
     std::string str2(".csv");
@@ -84,17 +77,13 @@ int main()
             std::string CSVFile = Value;
             if(CSVFile.find(str2) != std::string::npos) // found
             {
-                std::ifstream CF(CSVFile.c_str());
-                // CF.open(CSVFile, std::ifstream::in);
+                std::fstream CF;
+                std::string pa = "proj4data/";
+                // std::string AndPath = "proj4data/" + CSVFile;
+                std::string AndPath = CPath::CurrentPath() + pa + CSVFile;
+                std::cout << AndPath << std::endl;
+                CF.open(AndPath, std::fstream::in | std::fstream::out);
                 std::vector <std::string> row;
-                std::cout << CSVFile << std::endl;
-                if(CF.good())
-                {
-                    std::cout << "   gooooooooood  " << std::endl;
-                }
-                else{
-                    std::cout << "   badddddd    " << std::endl;
-                }
                 if(!CF.is_open())
                 {
                     std::cout << "  Can not be opened  " << std::endl; 
@@ -176,36 +165,151 @@ int main()
 
 
 
-std::string Name() // The given name of the baby
-{
-    std::string inputName;
-    std::string cp;
-    std::cout << "  please enter a baby name  " << std::endl;
-    std::cin >> inputName;
+// while(1){
 
-    // we have to do some reading here to search the specfic name here
-     
+// 		std::vector<std::vector <std::string> > Final = { {"All", "", "", ""}
+// 														  {"England", "", "", ""}
+// 														  {"Ireland", "", "", "",}
+// 														  {"Northern Ireland", "", "", ""}
+// 														  {"Scotland", "", "", ""}
+// 														  {"United States", "", "", ""}
+// 														}
+
+// 		BabyName = GetName();
+// 		//Function to send babyname through csvhell
+		
+		
+		
+// 		//Modifies the count
+// 		int rowcount = 1;
+// 		int MaleCount = 0;
+// 		int FemaleCount = 0;
+// 		int TempYearCount = 0;
+// 		int OverallCount = 0;
+		
+// 		if(row[1] == "F"){
+// 			//then check the next row for baby names, if there is another one get next row of males
+// 			rowcount = 2;
+// 		}
+		
+// 		if(rowcount == 1){
+// 			if(row[1] == "F"){
+// 				FemaleCount += row[2];
+// 				OverallCount += row[2];
+				
+// 			} else{
+// 				MaleCount += row[2];
+// 				OverallCount += row[2];
+// 			}
+// 		} else{
+// 			FemaleCount += row[2];
+// 			MaleCount += row2[2];
+// 			OverallCount = OverallCount + row[2] + row2[2];
+// 		}
+		
+		
+// 		//checks the middle year
+// 		int Average3Year[3];
+// 		int Iterate3 = 0;	
+// 		int Highest3YearAverage = 0;
+// 		int Temp3YearAverage = 0;
+		
+// 		std::string MiddleYear;
+// 		Average3Year[Iterate3%3] = MaleCount + FemaleCount;
+// 		Temp3YearAverage = (Average3Year[0] + Average3Year[1] + Average3Year[2])/3;
+		
+// 		if(Highest3YearAverage < Temp3YearAverage){
+// 			Highest3YearAverage = Temp3YearAverage;
+// 			int temp = stoi(year);
+// 			MiddleYear = tostring(temp - 1);
+// 		}
+		
+// 		Iterate3++;
+		
+		
+		
+// 		//reveals probabilty of boy or girl
+// 		Double Probabilty;
+// 		if(MaleCount < FemaleCount){
+// 			Probabilty = (FemaleCount/Overall) * 100;
+			
+// 		} else {
+// 			Probability = (MaleCount/Overall) * 100;
+// 		}
+		
+		
+		
+// 		//Construct All Cout
+// 		int MalePool;
+// 		int FemalePool;
+// 		int Pool = MalePool + FemalePool;
+// 		//these are all the males and females over the years
+		
+// 		if(MalePool < FemalePool){
+// 			Final[0][1] = "F";
+// 			Final[0][2] = tostring((FemalePool/Pool) * 100;); 
+// 		} else {
+// 			Final[0][1] = "M";
+// 			Final[0][2] = tostring(()MalePool/Pool) * 100);
+// 		}
+		
+		
+		
+// 		//Cout Portion		
+// 		for(int i = 0; i < Final.size(); i++){
+// 			std::cout << Final[i][0] << ": " << Final[i][1] << " (" << Final[i][2] << "%) " << Final[i][3];
+// 		}
+// 	}
+
     
 
-}
-
-char SEX() // The binary sex assigned at birth for the birth certificate (either M or F)
-{
-
-    // need to calculate the ratio here
-
-    // take counts thing to here
+    
+// }
 
 
 
-}
+// std::string GetName() // The given name of the baby
+// {
+// 	std::string NameInput;
+// 	std::cout << "Enter name> ";
+// 	std::cin << NameInput;
+// 	Name = StringUtils::Capitilize(NameInput);
+     
+//     return Name;
+
+// }
+
+// char SEX()
+// {
+// 	double Probabilty;
+// 	if(MaleCount < FemaleCount){
+// 		Probabilty = (FemaleCount/Overall) * 100;
+		
+// 	} else {
+// 		Probability = (MaleCount/Overall) * 100;
+// 	}
+// }
 
 
-int COUNT() // The number of babies of the assigned sex with the associated name born that year in that country
-{
-    // need to count the how many names here
-    // like how popular is the name here
-
-
-
-}
+// int COUNT(std::vector<std::string> row)
+// {
+// 	if(row[1] == "F"){
+// 		//then check the next row for baby names, if there is another one get next row of males
+// 		rowcount = 2;
+// 	}
+	
+// 	if(rowcount == 1){
+// 		if(row[1] == "F"){
+// 			FemaleCount += row[2];
+// 			OverallCount += row[2];
+			
+// 		} else{
+// 			MaleCount += row[2];
+// 			OverallCount += row[2];
+// 		}
+// 	} else{
+// 		FemaleCount += row[2];
+// 		MaleCount += row2[2];
+// 		OverallCount = OverallCount + row[2] + row2[2];
+// 	}
+// }

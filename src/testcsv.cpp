@@ -139,17 +139,23 @@ TEST(CSVWriter, SingleRow)
 }
 
 
-TEST(CSVWriter, MultipleRows)
+TEST(CSVWriter, MultipleRows1)
 {
     std::stringstream output;
     CCSVWriter Writer(output);
     // confusion here :  can the writer read the numbers like 5 instad of "5"?
-    std::vector<std::string> Row = {"\"I call our world Flatland,\x0a"
-                       "not because we call it so,\x0a"
-                       "but to make its nature clearer\x0a"
-                       "to you, my happy readers,\x0a"
-                       "who are privileged to live in Space.\""};
+    std::vector<std::string> Row = {"I call our world Flatland,\x0a",
+                     "tot because we call it so,\x0a",
+                     "but to make its nature clearer\x0a",
+                     "to you, my happy readers,\x0a",
+                     "who are privileged to live in Space."};
     EXPECT_TRUE(Writer.WriteRow(Row));
 }
 
-
+TEST(CSVWriter, MultipleRows2)
+{
+    std::stringstream output;
+    CCSVWriter Writer(output);
+    std::vector<std::string> Row = {"Hello  ", "\"Whatever\"", "Heya,a"};
+    EXPECT_TRUE(Writer.WriteRow(Row));
+}

@@ -23,9 +23,9 @@ EXlib = -lexpat
 
 #try to declare the library here
 # some problem here need check
-CSVOBJS = $(OBJ_DIR)/CSVReader.o $(OBJ_DIR)/CSVWriter.o
-XMLOBJS = $(OBJ_DIR)/XMLReader.o $(OBJ_DIR)/XMLWriter.o
-TotalOBJS = $(OBJ_DIR)/CSVReader.o $(OBJ_DIR)/CSVWriter.o $(OBJ_DIR)/XMLReader.o $(OBJ_DIR)/XMLWriter.o
+CSVOBJS = $(OBJ_DIR)/CSVReader.o $(OBJ_DIR)/CSVWriter.o  $(OBJ_DIR)/StringUtils.o
+XMLOBJS = $(OBJ_DIR)/XMLReader.o $(OBJ_DIR)/XMLWriter.o  $(OBJ_DIR)/StringUtils.o
+TotalOBJS = $(OBJ_DIR)/CSVReader.o $(OBJ_DIR)/CSVWriter.o $(OBJ_DIR)/XMLReader.o $(OBJ_DIR)/XMLWriter.o  $(OBJ_DIR)/StringUtils.o $(OBJ_DIR)/Path.o
 MAIN_OBJ = $(OBJ_DIR)/main.o
 
 PROG_NAME = BabyName
@@ -77,6 +77,12 @@ $(OBJ_DIR)/XMLReader.o: $(SRC_DIR)/XMLReader.cpp $(INCLUDE_DIR)/XMLReader.h
 
 $(OBJ_DIR)/XMLWriter.o: $(SRC_DIR)/XMLWriter.cpp $(INCLUDE_DIR)/XMLWriter.h
 	$(CXX) $(CXXFLAGS) $(SRC_DIR)/XMLWriter.cpp -c -o $(OBJ_DIR)/XMLWriter.o
+
+$(OBJ_DIR)/StringUtils.o: $(SRC_DIR)/StringUtils.cpp $(INCLUDE_DIR)/StringUtils.h
+	$(CXX) $(CXXFLAGS) $(SRC_DIR)/StringUtils.cpp -c -o $(OBJ_DIR)/StringUtils.o
+
+$(OBJ_DIR)/Path.o: $(SRC_DIR)/Path.cpp $(INCLUDE_DIR)/Path.h
+	$(CXX) $(CXXFLAGS) $(SRC_DIR)/Path.cpp -c -o $(OBJ_DIR)/Path.o
 # #try to link the library here
 # $(TESTBIN_DIR)/$(XMLTEST): $(OBJ_DIR)/testxml.o $(XMLOBJS)
 # 	$(CXX) $(CXXFLAGS) $(OBJ_DIR)/testxml.o $(XMLOBJS) -o $(TESTBIN_DIR)/$(XMLTEST) $(TESTLDFLAGS) $(EXlib)

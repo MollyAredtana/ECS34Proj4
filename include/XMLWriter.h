@@ -7,7 +7,9 @@
 
 class CXMLWriter{
     private:
-        std::ostream &osoutput;
+    	std::ostream &DOutput;
+    	std::stack <std::string> Elements;
+    	
         
     public:
         CXMLWriter(std::ostream &os);
@@ -17,5 +19,4 @@ class CXMLWriter{
         bool WriteEntity(const SXMLEntity &entity);
 };
 
-#endif
-                                      
+#endif                         
